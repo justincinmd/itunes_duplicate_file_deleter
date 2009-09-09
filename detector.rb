@@ -71,7 +71,7 @@ def test_for_dupes
   checked = 0
   @mp3_files.each{|size, file_paths|
     checked = checked + 1
-    puts "Checking MP3 #{checked} of #{@files.length}"
+    puts "Checking MP3 #{checked} of #{@mp3_files.length}"
     match_files = []
 
     while file_paths.length > 0
