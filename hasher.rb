@@ -35,6 +35,6 @@ class Hasher
 				@hashfunc.update(readBuf)
 			end
 		end
-		return "#{File.mtime(@fullfilename).to_i}:#{}:#{@hashfunc.hexdigest}"
+		return "#{@hashfunc.hexdigest}"
 	end
 end

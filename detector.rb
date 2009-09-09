@@ -3,10 +3,13 @@
 require 'ftools'
 require 'rubygems'
 require 'highline/import'
+require 'mp3info'
 
 
 @files = {}
+@mp3_files = {}
 @total_files = 0
+@total_mp3_files = 0
 
 def usage
 	puts "Usage: detector.rb"
@@ -28,12 +31,22 @@ def index_directory
         @files[File.size(x)] << File.expand_path(x)
         @total_files = @total_files + 1
       end
+
+      if x.downcase.include?('.mp3')
+        size = Mp3Info.open(File.expand_path(x)).audio_content[1]
+        @mp3_files[size] = [] if @mp3_files[size].nil?
+        @mp3_files[size] << File.expand_path(x)
+        @total_mp3_files = @total_mp3_files + 1
+      end
     end
   }
 end
 
 def remove_non_dupes
   @files.delete_if{|key,value|
+    value.length < 2
+  }
+  @mp3_files.delete_if{|key,value|
     value.length < 2
   }
 end
@@ -102,9 +115,13 @@ puts "Scanning Directories"
 index_directory
 
 puts "#{@total_files} Total Files Found"
+puts "#{@total_mp3_files} Total MP3 Files to Test"
 
 remove_non_dupes
 puts "#{@files.keys.length} Duplicate Sizes Found"
+puts "#{@mp3_files.keys.length} Duplicate MP3 Content Lengths Found"
+
+sleep 10
 
 puts "Testing for Dupes"
 test_for_dupes
