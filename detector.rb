@@ -9,7 +9,7 @@ def index_directory
   Dir.foreach(Dir.pwd){|x|
     if FileTest.directory?(x)
       Dir.chdir(x) do
-        index_directory(x)
+        index_directory
       end
     elsif FileTest.ARGF
 
