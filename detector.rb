@@ -8,7 +8,7 @@ def index_directory
   puts Dir.pwd
   Dir.foreach(Dir.pwd){|x|
     if FileTest.directory?(x)
-      puts x[0]
+      puts x[0,1]
       puts x
       unless x[0] == '.'
         Dir.chdir(x) do
