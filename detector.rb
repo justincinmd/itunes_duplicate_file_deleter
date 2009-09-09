@@ -11,12 +11,16 @@ require 'yaml'
 @old_mp3_files = {}
 @total_files = 0
 @total_mp3_files = 0
+@base = Dir.pwd
 
 def usage
 	puts "Usage: detector.rb"
 end
 
 def index_directory
+  File.delete("files.yaml") if File.exist?("files.yaml")
+  File.delete("mp3_files.yaml") if File.exist?("mp3_files.yaml") and Dir.pwd != @base
+
   puts Dir.pwd
   Dir.foreach(Dir.pwd){|x|
     if FileTest.directory?(x)
