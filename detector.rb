@@ -18,7 +18,7 @@ def index_directory
       end
     elsif FileTest.file?(x)
       #puts File.expand_path(x)
-      @files[File.size(x)] = [] if files[File.size(x)].nil?
+      @files[File.size(x)] = [] if @files[File.size(x)].nil?
       @files[File.size(x)] << File.expand_path(x)
       total_files = total_files + 1
     end
