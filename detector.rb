@@ -1,7 +1,7 @@
 #!/usr/bin/ruby1.8 -w
 
 @files = {}
-total_files = 0
+@total_files = 0
 
 def usage
 	puts "Usage: detector.rb"
@@ -20,7 +20,7 @@ def index_directory
       #puts File.expand_path(x)
       @files[File.size(x)] = [] if @files[File.size(x)].nil?
       @files[File.size(x)] << File.expand_path(x)
-      total_files = total_files + 1
+      @total_files = @total_files + 1
     end
   }
 end
@@ -34,7 +34,7 @@ end
 puts "Scanning Directories"
 index_directory
 
-puts "#{total_files} Total Files Found"
+puts "#{@total_files} Total Files Found"
 
 remove_non_dupes
 puts "#{@files.keys.length} Duplicate Sizes Found"
