@@ -61,17 +61,16 @@ def clear_dupe(matched_files)
   puts ""
   puts ""
   choose do |menu|
-    menu.prompt("Select which file to keep:")    
-    matched_files.each{|f| menu.choice(f) do |file, details| puts "SELECTED #{file}" end}
+    menu.prompt = "Select which file to keep:"
     menu.choice(:skip)
-  end
-  
-end
-
-choose do |menu|
-  menu.prompt = "Select which file to keep:"
-  ['test1', 'test2', 'test3'].each{|f| menu.choice(f) do |file, details| puts "SELECTED #{file}"; sleep 10 end}
-  menu.choice(:skip)
+    matched_files.each{|f|
+      menu.choice(f) do |file, details|
+        matched_files.delete(file)
+        matched_files.each{|file_to_delete| puts "Deleting #{file_to_delete}"}
+        sleep 10
+      end
+    }
+  end  
 end
 
 puts "Scanning Directories"
