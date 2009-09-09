@@ -66,8 +66,7 @@ def clear_dupe(matched_files)
     matched_files.each{|f|
       menu.choice(f) do |file, details|
         matched_files.delete(file)
-        matched_files.each{|file_to_delete| puts "Deleting #{file_to_delete}"}
-        sleep 10
+        matched_files.each{|file_to_delete| File.delete(file_to_delete)}
       end
     }
   end  
