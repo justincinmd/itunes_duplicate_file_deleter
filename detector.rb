@@ -64,18 +64,33 @@ def test_for_dupes
 end
 
 def clear_dupe(matched_files)
-  puts ""
-  puts ""
-  choose do |menu|
-    menu.prompt = "Select which file to keep:"
-    menu.choice(:skip)
-    matched_files.each{|f|
-      menu.choice(f) do |file, details|
-        matched_files.delete(file)
+  test = matched_files.collect{|f| File.basename(f, File.extname(f)).sub(/\s*\d+\z/, '') }.uniq.length == 1
+  if test
+    puts ""
+    puts ""
+    choose do |menu|
+      matched_files.each{|f| puts f}
+      menu.prompt = "Delete all but #{matched_files[0]}:"
+      menu.choice(:no)
+      menu.choice(:yes) do
+        matched_files.delete(matched_files[0])
         matched_files.each{|file_to_delete| File.delete(file_to_delete)}
       end
-    }
-  end  
+    end
+  else
+    puts ""
+    puts ""
+    choose do |menu|
+      menu.prompt = "Select which file to keep:"
+      menu.choice(:skip)
+      matched_files.each{|f|
+        menu.choice(f) do |file, details|
+          matched_files.delete(file)
+          matched_files.each{|file_to_delete| File.delete(file_to_delete)}
+        end
+      }
+    end
+  end
 end
 
 puts "Scanning Directories"
