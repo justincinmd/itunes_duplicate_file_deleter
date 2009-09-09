@@ -1,6 +1,7 @@
 #!/usr/bin/ruby1.8 -w
 
 files = {}
+total_files = 0
 
 def usage
 	puts "Usage: detector.rb"
@@ -16,10 +17,14 @@ def index_directory
         end
       end
     elsif FileTest.file?(x)
-      puts x
+      puts File.path(x)
+      files[File.size(x)] = [] if files[File.size(x)].nil?
+      total_files = total_files + 1
     end
   }
 end
 
 puts "Scanning Directories"
 index_directory
+
+puts "#{total_files} Found"
