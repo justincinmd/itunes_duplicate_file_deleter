@@ -69,7 +69,7 @@ def clear_dupe(matched_files)
 end
 
 choose do |menu|
-  menu.prompt("Select which file to keep:")
+  menu.prompt = "Select which file to keep:"
   ['test1', 'test2', 'test3'].each{|f| menu.choice(f) do |file, details| puts "SELECTED #{file}" end}
   menu.choice(:skip)
 end
