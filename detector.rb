@@ -39,7 +39,10 @@ def remove_non_dupes
 end
 
 def test_for_dupes
+  checked = 0
   @files.each{|size, file_paths|
+    checked = checked + 1
+    puts "Checking item #{checked} of #{@files.length}"
     match_files = []
 
     while file_paths.length > 0
