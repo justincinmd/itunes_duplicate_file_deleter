@@ -69,6 +69,35 @@ end
 
 def test_for_dupes
   checked = 0
+  @mp3_files.each{|size, file_paths|
+    checked = checked + 1
+    puts "Checking MP3 #{checked} of #{@files.length}"
+    match_files = []
+
+    while file_paths.length > 0
+      base_file = file_paths[0]
+      match_files << base_file
+      
+      audio_content = Mp3Info.open(base_file).audio_content
+      base_content = IO.read(base_file, audio_content[1], audio_content[0])
+
+      for path in file_paths
+        unless match_files.include?(path)
+          audio_content = Mp3Info.open(path).audio_content
+          match_content = IO.read(path, audio_content[1], audio_content[0])
+          
+          match_files << path if base_content == match_content
+        end
+      end
+
+      clear_dupe(match_files.dup) if match_files.length > 1
+
+      file_paths = file_paths - match_files
+      match_files = []
+    end
+  }
+
+  checked = 0
   @files.each{|size, file_paths|
     checked = checked + 1
     puts "Checking item #{checked} of #{@files.length}"
