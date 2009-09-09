@@ -1,5 +1,8 @@
 #!/usr/bin/ruby1.8 -w
 
+require 'ftools'
+
+
 @files = {}
 @total_files = 0
 
