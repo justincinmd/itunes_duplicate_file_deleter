@@ -69,3 +69,4 @@ remove_non_dupes
 puts "#{@files.keys.length} Duplicate Sizes Found"
 
 puts "Testing for Dupes"
+test_for_dupes
