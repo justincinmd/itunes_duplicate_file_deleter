@@ -50,7 +50,7 @@ def test_for_dupes
         end
       end
 
-      clear_dupe(match_files)
+      clear_dupe(match_files.dup)
 
       file_paths = file_paths - match_files
     end
@@ -80,12 +80,5 @@ puts "#{@total_files} Total Files Found"
 remove_non_dupes
 puts "#{@files.keys.length} Duplicate Sizes Found"
 
-#test_for_dupes = ask("Test for Dupes? (y/n)") {|q|
-#  q.default = "y"
-#  q.in = ['y','n']
-#}
-
-#if test_for_dupes == 'y'
-  puts "Testing for Dupes"
-  test_for_dupes
-#end
+puts "Testing for Dupes"
+test_for_dupes
