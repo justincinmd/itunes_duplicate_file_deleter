@@ -70,7 +70,7 @@ end
 
 choose do |menu|
   menu.prompt = "Select which file to keep:"
-  ['test1', 'test2', 'test3'].each{|f| menu.choice(f) do |file, details| puts "SELECTED #{file}" end}
+  ['test1', 'test2', 'test3'].each{|f| menu.choice(f) do |file, details| puts "SELECTED #{file}"; sleep 10 end}
   menu.choice(:skip)
 end
 
