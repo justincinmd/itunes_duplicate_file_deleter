@@ -17,10 +17,6 @@ def usage
 end
 
 def index_directory
-  if File.exists?('mp3_files.yaml')
-    puts 'Loading from YAML'
-    @old_mp3_files = YAML::load(File.open('mp3_files.yaml'))
-  end
   puts Dir.pwd
   Dir.foreach(Dir.pwd){|x|
     if FileTest.directory?(x)
@@ -56,7 +52,6 @@ def index_directory
       end
     end
   }
-  File.open('mp3_files.yaml', 'w') { |f| f.puts @old_mp3_files.to_yaml }
 end
 
 def remove_non_dupes
@@ -129,7 +124,12 @@ def clear_dupe(matched_files)
 end
 
 puts "Scanning Directories"
+if File.exists?('mp3_files.yaml')
+  puts 'Loading from YAML'
+  @old_mp3_files = YAML::load(File.open('mp3_files.yaml'))
+end
 index_directory
+File.open('mp3_files.yaml', 'w') { |f| f.puts @old_mp3_files.to_yaml }
 
 puts "#{@total_files} Total Files Found"
 puts "#{@total_mp3_files} Total MP3 Files to Test"
