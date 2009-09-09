@@ -59,10 +59,16 @@ end
 
 def clear_dupe(matched_files)
   puts ""
-  for file in matched_files
-    puts file
-  end
   puts ""
+  choose do |menu|
+    menu.prompt("Select which file to keep:")
+    
+    menu.choices(matched_files) do |file, details|
+      puts "SELECTED #{file}"
+    end
+    menu.choice(:skip)
+  end
+  
 end
 
 puts "Scanning Directories"
