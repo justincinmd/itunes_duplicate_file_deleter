@@ -50,7 +50,7 @@ def test_for_dupes
         end
       end
 
-      clear_dupe(match_files.dup)
+      clear_dupe(match_files.dup) if match_files.length > 1
 
       file_paths = file_paths - match_files
     end
