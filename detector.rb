@@ -4,7 +4,7 @@ require 'ftools'
 require 'rubygems'
 require 'highline/import'
 require 'mp3info'
-
+require 'yaml'
 
 @files = {}
 @mp3_files = {}
@@ -16,30 +16,40 @@ def usage
 end
 
 def index_directory
-  puts Dir.pwd
-  Dir.foreach(Dir.pwd){|x|
-    if FileTest.directory?(x)
-      unless x[0,1] == '.'
-        Dir.chdir(x) do
-          index_directory
+  if File.exists?('files.yaml') and File.exists?('mp3_files.yaml')
+    @files = YAML::load(File.open('files.yaml'))
+    @mp3_files = YAML::load(File.open('mp3_files.yaml'))
+  else
+    puts Dir.pwd
+    Dir.foreach(Dir.pwd){|x|
+      if FileTest.directory?(x)
+        unless x[0,1] == '.'
+          Dir.chdir(x) do
+            index_directory
+          end
+        end
+      elsif FileTest.file?(x)
+        #puts File.expand_path(x)
+        if !x.include?('.aa') and !x.include?('.pos')
+          @files[File.size(x)] = [] if @files[File.size(x)].nil?
+          @files[File.size(x)] << File.expand_path(x)
+          @total_files = @total_files + 1
+        end
+
+        if x.downcase.include?('.mp3')
+          begin
+            size = Mp3Info.open(File.expand_path(x)).audio_content[1]
+            @mp3_files[size] = [] if @mp3_files[size].nil?
+            @mp3_files[size] << File.expand_path(x)
+            @total_mp3_files = @total_mp3_files + 1
+          rescue
+          end
         end
       end
-    elsif FileTest.file?(x)
-      #puts File.expand_path(x)
-      if !x.include?('.aa') and !x.include?('.pos')
-        @files[File.size(x)] = [] if @files[File.size(x)].nil?
-        @files[File.size(x)] << File.expand_path(x)
-        @total_files = @total_files + 1
-      end
-
-      if x.downcase.include?('.mp3')
-        size = Mp3Info.open(File.expand_path(x)).audio_content[1]
-        @mp3_files[size] = [] if @mp3_files[size].nil?
-        @mp3_files[size] << File.expand_path(x)
-        @total_mp3_files = @total_mp3_files + 1
-      end
-    end
-  }
+    }
+    File.open('files.yaml', 'w') { |f| f.puts @files.to_yaml }
+    File.open('mp3_files.yaml', 'w') { |f| f.puts @mp3_files.to_yaml }
+  end
 end
 
 def remove_non_dupes
