@@ -74,6 +74,12 @@ def clear_dupe(matched_files)
   end  
 end
 
+a = "/raid/music/Compilations/Greatest Hitz/15 Why.mp3"
+b = "/raid/music/Soundgarden/Badmotorfinger/08 Room a Thousand Years Wide.mp3"
+puts File.compare(a, b)
+exit
+
+
 puts "Scanning Directories"
 index_directory
 
