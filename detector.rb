@@ -8,10 +8,12 @@ def index_directory
   puts Dir.pwd
   Dir.foreach(Dir.pwd){|x|
     if FileTest.directory?(x)
-      Dir.chdir(x) do
-        index_directory
+      unless ['.', '..'].include?(x)
+        Dir.chdir(x) do
+          index_directory
+        end
       end
-    elsif FileTest.ARGF
+    else
 
     end
   }
