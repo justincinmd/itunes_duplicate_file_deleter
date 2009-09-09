@@ -108,8 +108,12 @@ def test_for_dupes
       match_files << base_file
 
       for path in file_paths
-        unless match_files.include?(path)
-          match_files << path if File.compare(base_file, path)
+        if File.exist?(path)
+          unless match_files.include?(path)
+            match_files << path if File.compare(base_file, path)
+          end
+        else
+          file_paths.delete(path)
         end
       end
 
