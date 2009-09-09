@@ -68,15 +68,20 @@ def clear_dupe(matched_files)
   if test
     puts ""
     puts ""
-    choose do |menu|
-      matched_files.each{|f| puts f}
-      menu.prompt = "Delete all but #{matched_files[0]}:"
-      menu.choice(:no)
-      menu.choice(:yes) do
-        matched_files.delete(matched_files[0])
-        matched_files.each{|file_to_delete| File.delete(file_to_delete)}
-      end
-    end
+#    choose do |menu|
+#      matched_files.each{|f| puts f}
+#      menu.prompt = "Delete all but #{matched_files[0]}:"
+#      menu.choice(:no)
+#      menu.choice(:yes) do
+#        matched_files.delete(matched_files[0])
+#        matched_files.each{|file_to_delete| File.delete(file_to_delete)}
+#      end
+#    end
+#  this logic is good enough to run on auto
+    matched_files.delete(matched_files[0])
+    matched_files.each{|file_to_delete| File.delete(file_to_delete)}
+
+    puts "Auto-deleted all but #{matched_files[0]}"
   else
     puts ""
     puts ""
