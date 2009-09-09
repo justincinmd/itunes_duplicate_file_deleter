@@ -2,7 +2,7 @@
 
 require 'ftools'
 require 'rubygems'
-require 'highline'
+require 'highline/import'
 
 
 @files = {}
