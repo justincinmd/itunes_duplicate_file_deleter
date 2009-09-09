@@ -17,6 +17,7 @@ end
 
 def index_directory
   if File.exists?('files.yaml') and File.exists?('mp3_files.yaml')
+    puts 'Loading from YAML'
     @files = YAML::load(File.open('files.yaml'))
     @mp3_files = YAML::load(File.open('mp3_files.yaml'))
   else
