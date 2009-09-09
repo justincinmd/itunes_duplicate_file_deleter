@@ -1,5 +1,7 @@
 #!/usr/bin/ruby1.8 -w
 
+files = {}
+
 def usage
 	puts "Usage: detector.rb"
 end
@@ -13,10 +15,11 @@ def index_directory
           index_directory
         end
       end
-    else
-
+    elsif FileTest.file?(x)
+      puts x
     end
   }
 end
 
+puts "Scanning Directories"
 index_directory
