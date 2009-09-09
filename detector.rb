@@ -1,6 +1,8 @@
 #!/usr/bin/ruby1.8 -w
 
 require 'ftools'
+require 'rubygems'
+require 'highline'
 
 
 @files = {}
@@ -71,5 +73,12 @@ puts "#{@total_files} Total Files Found"
 remove_non_dupes
 puts "#{@files.keys.length} Duplicate Sizes Found"
 
-puts "Testing for Dupes"
-test_for_dupes
+test_for_dupes = ask("Test for Dupes? (y/n)") {|q|
+  q.default = "y"
+  q.in = ['y','n']
+}
+
+if test_for_dupes == 'y'
+  puts "Testing for Dupes"
+  test_for_dupes
+end
