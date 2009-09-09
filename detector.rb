@@ -5,6 +5,7 @@ def usage
 end
 
 def index_directory
+  puts Dir.pwd
   Dir.foreach(Dir.pwd){|x|
     if FileTest.directory?(x)
       Dir.chdir(x) do
@@ -16,4 +17,4 @@ def index_directory
   }
 end
 
-puts Dir.pwd
+index_directory
